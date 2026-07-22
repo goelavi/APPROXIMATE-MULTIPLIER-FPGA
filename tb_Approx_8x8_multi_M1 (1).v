@@ -1,24 +1,11 @@
 `timescale 1ns / 1ps
-//------------------------------------------------------------------------
-// Self-checking testbench for Approx_8x8_multi_M1
-//
-// Strategy:
-//   1. Directed sanity checks (a handful of hand-picked values, incl.
-//      edge cases like 0, max value, and powers of two) so waveforms
-//      are easy to eyeball in GTKWave.
-//   2. Exhaustive sweep over all 256 x 256 = 65536 input combinations,
-//      comparing the approximate product against the exact product,
-//      and computing standard approximate-computing accuracy metrics:
-//        - Error Rate (ER)   : % of inputs where approx != exact
-//        - MRED              : Mean Relative Error Distance
-//        - Max absolute error observed
-//------------------------------------------------------------------------
+
 
 module tb_Approx_8x8_multi_M1;
 
     reg  [7:0]  A, B;
     wire [15:0] P;          // approximate product (DUT output)
-    reg  [15:0] exact;      // exact product (golden reference, computed in TB)
+    reg  [15:0] exact;      // exact product 
 
     integer i, j;
     integer error_count;
@@ -28,7 +15,7 @@ module tb_Approx_8x8_multi_M1;
     real    sum_rel_err;
     integer max_abs_err;
 
-    // Device under test
+   
     Approx_8x8_multi_M1 DUT (
         .A(A),
         .B(B),
@@ -41,17 +28,14 @@ module tb_Approx_8x8_multi_M1;
         $dumpvars(0, tb_Approx_8x8_multi_M1);
     end
 
-    //--------------------------------------------------------------
-    // Task: apply one input pair, wait for combinational settle,
-    // compute the exact product, and self-check against the DUT.
-    //--------------------------------------------------------------
+
     task run_case(input [7:0] a_in, input [7:0] b_in);
         begin
             A = a_in;
             B = b_in;
             #5; // allow combinational logic to settle
 
-            exact = a_in * b_in; // golden reference (unsigned mult)
+            exact = a_in * b_in; // (unsigned exact mult)
             total_count = total_count + 1;
 
             if (P !== exact) begin
@@ -71,9 +55,9 @@ module tb_Approx_8x8_multi_M1;
         end
     endtask
 
-    //--------------------------------------------------------------
-    // Directed sanity checks — easy to inspect by hand in waveforms
-    //--------------------------------------------------------------
+    
+    // Directed sanity checks 
+  
     task run_directed_checks;
         begin
             $display("---- Directed sanity checks ----");
@@ -88,9 +72,9 @@ module tb_Approx_8x8_multi_M1;
         end
     endtask
 
-    //--------------------------------------------------------------
+    
     // Main stimulus
-    //--------------------------------------------------------------
+    
     initial begin
         error_count  = 0;
         total_count  = 0;
