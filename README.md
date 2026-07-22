@@ -15,7 +15,11 @@ How the 8x8 is built
 
 Instead of approximating the full 8x8 array directly, I split each 8-bit operand into two 4-bit halves and built the 8x8 multiplier out of four 4x4 multiplies, added together with the right shifts:
 
-<img width="574" height="544" alt="image" src="https://github.com/user-attachments/assets/571e78ca-082a-4112-949b-64f9da444e4b" />
+<img width="574" height="146" alt="image" src="https://github.com/user-attachments/assets/92b4a421-cc48-4e3f-9979-067779cd5263" />
+
+
+<img width="566" height="358" alt="image" src="https://github.com/user-attachments/assets/ac9cc658-da9a-43f9-a545-fe8b730cd181" />
+
 
 
 
